@@ -12,13 +12,6 @@ public interface DAO <E, D>{
 	public void escribirEnArchivoDeTexto();
 	public void cargarDesdeArchivoSerializado();
 	public void escribirEnArchivoSerializado();
-	public String generarReporteDiaActual();
 	public void ordenarSelectionSort();
-	public void ordenarQuickSort(int low, int high);
-	public void ordenarBubbleSort();
-	public void ordenarInsertionSort();
-	public int partition(int low, int high);
-	public void swap(int i, int j);
-	public void ordenarMerge(int l, int m, int r);
-	public void ordenarMergeSort(int l, int r);
+
 }

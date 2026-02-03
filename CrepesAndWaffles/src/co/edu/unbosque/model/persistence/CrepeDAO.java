@@ -74,80 +74,66 @@ public class CrepeDAO implements DAO<Crepe, CrepeDTO>{
 
 	@Override
 	public void leerDesdeArchivoDeTexto(String url) {
-		// TODO Auto-generated method stub
-		
+		String contenido;
+		contenido = FileHandler.leerDesdeArchivoDeTexto(url);
+		if (contenido == "" || contenido.isBlank()) {
+			return;
+		}
+		else {
+			String [] filas = contenido.split("\n");
+			for (int i = 0; i < filas.length; i++) {
+				String [] columnas = filas[i].split(";");
+				Crepe temp = new Crepe();
+				temp.setPrecio(Integer.parseInt(columnas[0]));
+				temp.setSabor(columnas[1]);
+				temp.setEsVegano(Boolean.parseBoolean(columnas[2]));
+				temp.setEsSalado(Boolean.parseBoolean(columnas[3]));
+				
+				listaCrepes.add(temp);
+			}
+		}
 	}
 
 	@Override
 	public void escribirEnArchivoDeTexto() {
-		// TODO Auto-generated method stub
+		StringBuilder sb = new StringBuilder();
+		for (Crepe crepe : listaCrepes) {
+			sb.append(crepe.getPrecio() + ";");
+			sb.append(crepe.getSabor() + ";");
+			sb.append(crepe.isEsVegano() + ";");
+			sb.append(crepe.isEsSalado() + "\n");
+		}
 		
+		FileHandler.escribirEnArchivoTexto(FILE_NAME, sb.toString());
 	}
 
 	@Override
 	public void cargarDesdeArchivoSerializado() {
-		// TODO Auto-generated method stub
+		Object contenido = FileHandler.leerDesdeArchivoSerializado(SERIAL_FILE_NAME);
+		if (contenido != null) {
+			listaCrepes = (ArrayList<Crepe>) contenido;
+		}
+		else {
+			listaCrepes = new ArrayList<>();
+		}
 		
 	}
 
 	@Override
 	public void escribirEnArchivoSerializado() {
-		// TODO Auto-generated method stub
+		FileHandler.escribirEnArchivoSerializado(SERIAL_FILE_NAME, listaCrepes);
 		
-	}
-
-	@Override
-	public String generarReporteDiaActual() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
 	public void ordenarSelectionSort() {
-		// TODO Auto-generated method stub
+		int n = listaCrepes.size();
+		for (int i = 0; i < n -1; i++) {
+			
+		}
 		
 	}
 
-	@Override
-	public void ordenarQuickSort(int low, int high) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void ordenarBubbleSort() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void ordenarInsertionSort() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int partition(int low, int high) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void swap(int i, int j) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void ordenarMerge(int l, int m, int r) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void ordenarMergeSort(int l, int r) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
