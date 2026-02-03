@@ -142,6 +142,22 @@ public class CrepeDAO implements DAO<Crepe, CrepeDTO>{
 		
 	}
 
+	public ArrayList<Crepe> getListaCrepes() {
+		return listaCrepes;
+	}
 
+	public void setListaCrepes(ArrayList<Crepe> listaCrepes) {
+		this.listaCrepes = listaCrepes;
+	}
+
+	public String getFILE_NAME() {
+		return FILE_NAME;
+	}
+
+	public String getSERIAL_FILE_NAME() {
+		return SERIAL_FILE_NAME;
+	}
+
+	
 
 }
