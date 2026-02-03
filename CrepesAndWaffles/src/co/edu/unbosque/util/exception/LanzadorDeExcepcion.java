@@ -49,30 +49,8 @@ public class LanzadorDeExcepcion {
 	}
 	
 	
-	public static void verificarSexo(char sexo) throws InvalidSexException{
-	    if (sexo != 'M' && sexo != 'H' && sexo != 'N' && sexo != 'm' && sexo != 'h' && sexo != 'n') {
-	        throw new InvalidSexException();
-	    }
-	}
-	
-	public static void verificarTamanio(String t)throws InvalidSizeException {
-		if (t.toLowerCase().contains("grande")||t.toLowerCase().contains("mediano")||t.toLowerCase().contains("pequeño")) {
-			return;
-		} 
-		throw new InvalidSizeException();
-	}
-	public static void verificarFecha(LocalDate fechaIngresada) throws InvalidDateException {
-		if(fechaIngresada.isAfter(LocalDate.now()))
-		throw new InvalidDateException();
-	}
-	public static void verificarFechaVacia(LocalDate fecha) throws InvalidDateNullException{
-		   if(fecha == null) {
-			   throw new InvalidDateNullException();
-		   }
-	    }
-	
-		 
-	       public static void verificarRespuesta(boolean r) throws InvalidAnswerException {
+
+	      public static void verificarRespuesta(boolean r) throws InvalidAnswerException {
 	    	   if(!r) {
 	    		   throw new InvalidAnswerException();
 	    	   }
