@@ -128,8 +128,16 @@ public class CrepeDAO implements DAO<Crepe, CrepeDTO>{
 	@Override
 	public void ordenarSelectionSort() {
 		int n = listaCrepes.size();
-		for (int i = 0; i < n -1; i++) {
-			
+		for (int i = 0; i < n -1 ; i++) {
+			int minIndex = i;
+			for (int j = i+1; j < n; j++) {
+				if (listaCrepes.get(j).getPrecio() < listaCrepes.get(minIndex).getPrecio()){
+					minIndex = j;
+				}
+			}
+			Crepe temp = listaCrepes.get(i);
+			listaCrepes.set(i, listaCrepes.get(minIndex));
+			listaCrepes.set(minIndex, temp);
 		}
 		
 	}
