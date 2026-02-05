@@ -17,7 +17,8 @@ public class CrepeDAO implements DAO<Crepe, CrepeDTO>{
 	
 	@Override
 	public void create(CrepeDTO newData) {
-		listaCrepes.add(DataMapper.convertirCrepeDTOACrepe(newData));
+		Crepe temp = DataMapper.convertirCrepeDTOACrepe(newData);
+		listaCrepes.add(temp);
 		escribirEnArchivoDeTexto();
 		escribirEnArchivoSerializado();
 	}
@@ -112,9 +113,6 @@ public class CrepeDAO implements DAO<Crepe, CrepeDTO>{
 		Object contenido = FileHandler.leerDesdeArchivoSerializado(SERIAL_FILE_NAME);
 		if (contenido != null) {
 			listaCrepes = (ArrayList<Crepe>) contenido;
-		}
-		else {
-			listaCrepes = new ArrayList<>();
 		}
 		
 	}

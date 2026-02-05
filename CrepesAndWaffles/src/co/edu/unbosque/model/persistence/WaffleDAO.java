@@ -118,9 +118,7 @@ public class WaffleDAO implements DAO<Waffle, WaffleDTO>{
 		if (contenido != null) {
 			listaWaffles = (ArrayList<Waffle>) contenido;
 		}
-		else {
-			listaWaffles = new ArrayList<>();
-		}
+	
 	}
 
 	@Override

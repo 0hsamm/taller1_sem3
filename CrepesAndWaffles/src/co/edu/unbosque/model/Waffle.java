@@ -1,8 +1,14 @@
 package co.edu.unbosque.model;
 
-public class Waffle extends Producto{
+import java.io.Serializable;
+
+public class Waffle extends Producto implements Serializable{
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean tieneHelado;
 	private String saborHelado;
 	

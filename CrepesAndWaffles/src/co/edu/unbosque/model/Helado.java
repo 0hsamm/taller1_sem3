@@ -1,6 +1,12 @@
 package co.edu.unbosque.model;
 
-public class Helado extends Producto{
+import java.io.Serializable;
+
+public class Helado extends Producto implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int cantidadBola;
 	private boolean esCono;
 	

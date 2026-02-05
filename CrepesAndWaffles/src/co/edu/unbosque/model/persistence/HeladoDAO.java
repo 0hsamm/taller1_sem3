@@ -121,10 +121,7 @@ public class HeladoDAO implements DAO<Helado, HeladoDTO>{
 		if(contenido != null) {
 			listaHelados = (ArrayList<Helado>) contenido;
 		}
-		else {
-			listaHelados = new ArrayList<>();
-		}
-
+		
 	}
 
 	@Override

@@ -33,11 +33,11 @@ public class Seleccion extends JFrame{
 	private JLabel lblCarrito;
 	
 	public Seleccion() {
-		asignarComponentes();
+		inicializarComponentes();
 	}
 	
 	
-	public void asignarComponentes() {
+	public void inicializarComponentes() {
 		
 		
 		this.setTitle("Selección");

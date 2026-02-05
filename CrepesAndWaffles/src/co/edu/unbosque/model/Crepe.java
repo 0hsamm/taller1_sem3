@@ -1,6 +1,12 @@
 package co.edu.unbosque.model;
 
-public class Crepe extends Producto{
+import java.io.Serializable;
+
+public class Crepe extends Producto implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean esVegano;
 	private boolean esSalado;
 	
