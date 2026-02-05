@@ -1,6 +1,10 @@
 package co.edu.unbosque.model;
 
 public class CrepeDTO extends Producto{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean esVegano;
 	private boolean esSalado;
 	

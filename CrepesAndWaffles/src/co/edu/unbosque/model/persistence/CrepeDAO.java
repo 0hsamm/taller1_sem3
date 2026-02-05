@@ -11,9 +11,32 @@ public class CrepeDAO implements DAO<Crepe, CrepeDTO>{
 	private final String SERIAL_FILE_NAME = "Crepe.bin";
 	
 	public CrepeDAO() {
-		listaCrepes = new ArrayList<>();
-		cargarDesdeArchivoSerializado();
+	    listaCrepes = new ArrayList<>();
+	    cargarDesdeArchivoSerializado();
+
+	    boolean invalido = false;
+
+	    if (listaCrepes == null || listaCrepes.isEmpty()) {
+	        invalido = true;
+	    } else {
+	        for (int i = 0; i < listaCrepes.size(); i++) {
+	            Crepe c = listaCrepes.get(i);
+	            if (c == null || c.getSabor() == null) {
+	                invalido = true;
+	                break;
+	            }
+	        }
+	    }
+
+	    if (invalido) {
+	        listaCrepes = new ArrayList<>();
+	        leerDesdeArchivoDeTexto(FILE_NAME);
+	        escribirEnArchivoSerializado();
+	    }
 	}
+
+
+
 	
 	@Override
 	public void create(CrepeDTO newData) {
@@ -73,36 +96,43 @@ public class CrepeDAO implements DAO<Crepe, CrepeDTO>{
 		return listaCrepes.isEmpty();
 	}
 
+	
 	@Override
 	public void leerDesdeArchivoDeTexto(String url) {
-		String contenido;
-		contenido = FileHandler.leerDesdeArchivoDeTexto(url);
-		if (contenido == "" || contenido.isBlank()) {
-			return;
-		}
-		else {
-			String [] filas = contenido.split("\n");
-			for (int i = 0; i < filas.length; i++) {
-				String [] columnas = filas[i].split(";");
-				Crepe temp = new Crepe();
-				temp.setPrecio(Integer.parseInt(columnas[0]));
-				temp.setSabor(columnas[1]);
-				temp.setEsVegano(Boolean.parseBoolean(columnas[2]));
-				temp.setEsSalado(Boolean.parseBoolean(columnas[3]));
-				
-				listaCrepes.add(temp);
-			}
-		}
+	    String contenido = FileHandler.leerDesdeArchivoDeTexto(url);
+	    if (contenido == null || contenido.isBlank()) { 
+	    	return;
+	    }
+
+	    String[] filas = contenido.split("\n");
+	    for (String fila : filas) {
+	        if (fila.isBlank()) { 
+	        	continue;
+	        }
+
+	        String[] columnas = fila.split(";", -1);
+	        if (columnas.length < 4) continue;
+
+	        Crepe temp = new Crepe();
+	        temp.setPrecio(Integer.parseInt(columnas[0].trim()));
+	        temp.setSabor(columnas[1].trim());
+	        temp.setEsVegano(Boolean.parseBoolean(columnas[2].trim()));
+	        temp.setEsSalado(Boolean.parseBoolean(columnas[3].trim()));
+
+	        listaCrepes.add(temp);
+	    }
 	}
+
 
 	@Override
 	public void escribirEnArchivoDeTexto() {
 		StringBuilder sb = new StringBuilder();
 		for (Crepe crepe : listaCrepes) {
-			sb.append(crepe.getPrecio() + ";");
-			sb.append(crepe.getSabor() + ";");
-			sb.append(crepe.isEsVegano() + ";");
-			sb.append(crepe.isEsSalado() + "\n");
+			sb.append(crepe.getPrecio()).append(';');
+			sb.append(crepe.getSabor()).append(';');
+			sb.append(crepe.isEsVegano()).append(';');
+			sb.append(crepe.isEsSalado()).append('\n');
+
 		}
 		
 		FileHandler.escribirEnArchivoTexto(FILE_NAME, sb.toString());
@@ -113,6 +143,8 @@ public class CrepeDAO implements DAO<Crepe, CrepeDTO>{
 		Object contenido = FileHandler.leerDesdeArchivoSerializado(SERIAL_FILE_NAME);
 		if (contenido != null) {
 			listaCrepes = (ArrayList<Crepe>) contenido;
+		} else {
+			listaCrepes = new ArrayList<>();
 		}
 		
 	}

@@ -1,10 +1,16 @@
 package co.edu.unbosque.model;
 
-public class Producto {
+import java.io.Serializable;
+
+public class Producto implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int precio;
 	private String sabor;
 	
-	public Producto() {
+	public Producto()  {
 		// TODO Auto-generated constructor stub
 	}
 

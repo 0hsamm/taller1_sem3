@@ -2,37 +2,53 @@ package co.edu.unbosque.model.persistence;
 
 import java.util.ArrayList;
 
-import co.edu.unbosque.model.Crepe;
 import co.edu.unbosque.model.Waffle;
 import co.edu.unbosque.model.WaffleDTO;
 
-public class WaffleDAO implements DAO<Waffle, WaffleDTO>{
+public class WaffleDAO implements DAO<Waffle, WaffleDTO> {
 
-	
 	private ArrayList<Waffle> listaWaffles;
 	private final String FILE_NAME = "Waffle.csv";
 	private final String SERIAL_FILE_NAME = "Waffle.bin";
-	
-	
+
 	public WaffleDAO() {
 		listaWaffles = new ArrayList<>();
 		cargarDesdeArchivoSerializado();
+
+		boolean invalido = false;
+
+		if (listaWaffles == null || listaWaffles.isEmpty()) {
+			invalido = true;
+		} else {
+			for (int i = 0; i < listaWaffles.size(); i++) {
+				Waffle w = listaWaffles.get(i);
+				if (w == null || w.getSabor() == null || w.getSaborHelado() == null) {
+					invalido = true;
+					break;
+				}
+			}
+		}
+
+		if (invalido) {
+			listaWaffles = new ArrayList<>();
+			leerDesdeArchivoDeTexto(FILE_NAME);
+			escribirEnArchivoSerializado();
+		}
 	}
-	
-	
+
 	@Override
 	public void create(WaffleDTO newData) {
-		listaWaffles.add(DataMapper.convertirWaffleDTOAWaffle(newData));
+		Waffle temp = DataMapper.convertirWaffleDTOAWaffle(newData);
+		listaWaffles.add(temp);
 		escribirEnArchivoDeTexto();
 		escribirEnArchivoSerializado();
 	}
 
 	@Override
 	public boolean delete(int index) {
-		if (index < 0 || index >=  listaWaffles.size()) {
+		if (index < 0 || index >= listaWaffles.size()) {
 			return false;
-		}
-		else {
+		} else {
 			listaWaffles.remove(index);
 			escribirEnArchivoDeTexto();
 			escribirEnArchivoSerializado();
@@ -42,10 +58,9 @@ public class WaffleDAO implements DAO<Waffle, WaffleDTO>{
 
 	@Override
 	public boolean update(int index, WaffleDTO newData) {
-		if (index < 0 || index >=  listaWaffles.size()) {
+		if (index < 0 || index >= listaWaffles.size()) {
 			return false;
-		}
-		else {
+		} else {
 			listaWaffles.set(index, DataMapper.convertirWaffleDTOAWaffle(newData));
 			escribirEnArchivoDeTexto();
 			escribirEnArchivoSerializado();
@@ -61,7 +76,7 @@ public class WaffleDAO implements DAO<Waffle, WaffleDTO>{
 		String content = "";
 		int i = 1;
 		for (Waffle waffle : listaWaffles) {
-			content += "\n Crepe " + i + ". " + waffle.toString();
+			content += "\n Waffle " + i + ". " + waffle.toString();
 			i++;
 		}
 		return content + "\n";
@@ -79,23 +94,29 @@ public class WaffleDAO implements DAO<Waffle, WaffleDTO>{
 
 	@Override
 	public void leerDesdeArchivoDeTexto(String url) {
-		String contenido;
-		contenido = FileHandler.leerDesdeArchivoDeTexto(url);
-		if (contenido == "" || contenido.isBlank()) {
+		String contenido = FileHandler.leerDesdeArchivoDeTexto(url);
+		if (contenido == null || contenido.isBlank()) {
 			return;
 		}
-		else {
-			String [] filas = contenido.split("\n");
-			for (int i = 0; i < filas.length; i++) {
-				String [] columnas = filas[i].split(";");
-				Waffle temp = new Waffle();
-				temp.setPrecio(Integer.parseInt(columnas[0]));
-				temp.setSabor(columnas[1]);
-				temp.setTieneHelado(Boolean.parseBoolean(columnas[2]));
-				temp.setSaborHelado(columnas[3]);
-				
-				listaWaffles.add(temp);
+
+		String[] filas = contenido.split("\n");
+		for (String fila : filas) {
+			if (fila.isBlank()) {
+				continue;
 			}
+
+			String[] columnas = fila.split(";", -1);
+			if (columnas.length < 4) {
+				continue;
+			}
+
+			Waffle temp = new Waffle();
+			temp.setPrecio(Integer.parseInt(columnas[0].trim()));
+			temp.setSabor(columnas[1].trim());
+			temp.setTieneHelado(Boolean.parseBoolean(columnas[2].trim()));
+			temp.setSaborHelado(columnas[3].trim());
+
+			listaWaffles.add(temp);
 		}
 	}
 
@@ -103,12 +124,15 @@ public class WaffleDAO implements DAO<Waffle, WaffleDTO>{
 	public void escribirEnArchivoDeTexto() {
 		StringBuilder sb = new StringBuilder();
 		for (Waffle waffle : listaWaffles) {
-			sb.append(waffle.getPrecio() + ";");
-			sb.append(waffle.getSabor() + ";");
-			sb.append(waffle.isTieneHelado() + ";");
-			sb.append(waffle.getSaborHelado() + "\n");
+			String sabor = waffle.getSabor() == null ? "" : waffle.getSabor();
+			String saborHelado = waffle.getSaborHelado() == null ? "" : waffle.getSaborHelado();
+
+			sb.append(waffle.getPrecio()).append(';');
+			sb.append(sabor).append(';');
+			sb.append(waffle.isTieneHelado()).append(';');
+			sb.append(saborHelado).append('\n');
 		}
-		
+
 		FileHandler.escribirEnArchivoTexto(FILE_NAME, sb.toString());
 	}
 
@@ -117,23 +141,23 @@ public class WaffleDAO implements DAO<Waffle, WaffleDTO>{
 		Object contenido = FileHandler.leerDesdeArchivoSerializado(SERIAL_FILE_NAME);
 		if (contenido != null) {
 			listaWaffles = (ArrayList<Waffle>) contenido;
+		} else {
+			listaWaffles = new ArrayList<>();
 		}
-	
 	}
 
 	@Override
 	public void escribirEnArchivoSerializado() {
 		FileHandler.escribirEnArchivoSerializado(SERIAL_FILE_NAME, listaWaffles);
-		
 	}
 
 	@Override
 	public void ordenarSelectionSort() {
 		int n = listaWaffles.size();
-		for (int i = 0; i < n -1 ; i++) {
+		for (int i = 0; i < n - 1; i++) {
 			int minIndex = i;
-			for (int j = i+1; j < n; j++) {
-				if (listaWaffles.get(j).getPrecio() < listaWaffles.get(minIndex).getPrecio()){
+			for (int j = i + 1; j < n; j++) {
+				if (listaWaffles.get(j).getPrecio() < listaWaffles.get(minIndex).getPrecio()) {
 					minIndex = j;
 				}
 			}
@@ -143,26 +167,19 @@ public class WaffleDAO implements DAO<Waffle, WaffleDTO>{
 		}
 	}
 
-
 	public ArrayList<Waffle> getListaWaffles() {
 		return listaWaffles;
 	}
-
 
 	public void setListaWaffles(ArrayList<Waffle> listaWaffles) {
 		this.listaWaffles = listaWaffles;
 	}
 
-
 	public String getFILE_NAME() {
 		return FILE_NAME;
 	}
 
-
 	public String getSERIAL_FILE_NAME() {
 		return SERIAL_FILE_NAME;
 	}
-
-	
-	
 }

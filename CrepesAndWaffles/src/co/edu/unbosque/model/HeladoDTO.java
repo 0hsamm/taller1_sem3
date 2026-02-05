@@ -1,6 +1,10 @@
 package co.edu.unbosque.model;
 
 public class HeladoDTO extends Producto{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int cantidadBola;
 	private boolean esCono;
 	

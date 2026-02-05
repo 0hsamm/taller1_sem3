@@ -3,6 +3,10 @@ package co.edu.unbosque.model;
 public class WaffleDTO extends Producto{
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean tieneHelado;
 	private String saborHelado;
 	
