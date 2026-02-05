@@ -39,4 +39,23 @@ public class DataMapper {
 		entity.setEsSalado(dto.isEsSalado());
 		return entity;
 	}
+	
+	public static WaffleDTO convertirWaffleAWaffleDTO(Waffle entity) {
+		WaffleDTO dto = new WaffleDTO();
+		dto.setPrecio(entity.getPrecio());
+		dto.setSabor(entity.getSabor());
+		dto.setTieneHelado(entity.isTieneHelado());
+		dto.setSaborHelado(entity.getSaborHelado());
+		return dto;
+	}
+	
+	public static Waffle convertirWaffleDTOAWaffle(WaffleDTO dto) {
+		Waffle entity = new Waffle();
+		entity.setPrecio(dto.getPrecio());
+		entity.setSabor(dto.getSabor());
+		entity.setTieneHelado(dto.isTieneHelado());
+		entity.setSaborHelado(dto.getSaborHelado());
+		return entity;
+	}
+	
 }

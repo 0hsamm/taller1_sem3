@@ -14,7 +14,8 @@ public class Controller {
 	
 	
 	public void runGUI() {
-		vf.getVenMenu().setVisible(true);
+		vf.getVenMenu().setVisible(false);
+		vf.getSel().setVisible(true);
 	}
 	
 }

@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -16,6 +18,10 @@ public class MenuPrincipal extends JFrame{
 	private JLabel fondoMenu;
 
 	private JLabel titulo;
+	private JButton btnInicio;
+	
+	private JLabel lblIdioma;
+	private JComboBox<String> cbIdioma;
 	
 	public MenuPrincipal() {
 		inicializarComponentes();
@@ -39,13 +45,30 @@ public class MenuPrincipal extends JFrame{
 		this.setLocationRelativeTo(null);
 		
 		
-		titulo = new JLabel("Bienvenido a Crepes & Waffles");
+		titulo = new JLabel("Bienvenid@ a Crepes & Waffles");
 		titulo.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 60));
-		titulo.setBounds(100, 80, 1200, 70);
+		titulo.setBounds(100, 120, 1200, 70);
 		titulo.setForeground(Color.white);
 		fondoMenu.add(titulo);
 		
+		btnInicio = new JButton("Inicio");
+		btnInicio.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 15));
+		btnInicio.setBounds(500,480, 200, 70);
+		btnInicio.setBackground(Color.white);
+		btnInicio.setForeground(Color.BLACK);
+		btnInicio.setFocusPainted(false);
+		btnInicio.setBorder(null);
+		fondoMenu.add(btnInicio);
 		
+		cbIdioma = new JComboBox<>(new String[] {"...", "Español", "English"});
+		cbIdioma.setBounds(1000, 60, 150, 30);
+		fondoMenu.add(cbIdioma);
+		
+		lblIdioma = new JLabel("Idioma");
+		lblIdioma.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 30));
+		lblIdioma.setBounds(1000, 30, 150, 30);
+		lblIdioma.setForeground(Color.white);
+		fondoMenu.add(lblIdioma);
 		
 	}
 
@@ -79,6 +102,30 @@ public class MenuPrincipal extends JFrame{
 
 	public void setTitulo(JLabel titulo) {
 		this.titulo = titulo;
+	}
+
+	public JButton getBtnInicio() {
+		return btnInicio;
+	}
+
+	public void setBtnInicio(JButton btnInicio) {
+		this.btnInicio = btnInicio;
+	}
+
+	public JLabel getLblIdioma() {
+		return lblIdioma;
+	}
+
+	public void setLblIdioma(JLabel lblIdioma) {
+		this.lblIdioma = lblIdioma;
+	}
+
+	public JComboBox<String> getCbIdioma() {
+		return cbIdioma;
+	}
+
+	public void setCbIdioma(JComboBox<String> cbIdioma) {
+		this.cbIdioma = cbIdioma;
 	}
 	
 	
