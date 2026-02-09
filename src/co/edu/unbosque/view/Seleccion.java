@@ -83,7 +83,7 @@ public class Seleccion extends JFrame{
 		this.add(btnCarrito);
 		
 
-		
+		//borrar
 		btnVolver = new JButton("Volver");
 		btnVolver.setFont(new Font("Arial Rounded MT Bold", Font.BOLD,30));
 		btnVolver.setBounds(10, 20, 150, 50);
