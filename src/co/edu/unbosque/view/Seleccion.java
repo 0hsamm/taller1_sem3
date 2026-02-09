@@ -52,16 +52,10 @@ public class Seleccion extends JFrame{
 		
 		
 		
-		lblOpcion = new JLabel("¿Qué desea comer el día de hoy?");
+		lblOpcion = new JLabel("Comprar");
 		lblOpcion.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 40));	
-		lblOpcion.setBounds(225, 50, 1200, 70);
+		lblOpcion.setBounds(525, 50, 1200, 70);
 		this.add(lblOpcion);
-		
-
-		
-		btnWaffle = new JButton(new ImageIcon("src/co/edu/unbosque/view/waffle.jpg"));
-		btnWaffle.setBounds(100, 150, 300, 400);
-		this.add(btnWaffle);
 		
 
 		
@@ -71,26 +65,12 @@ public class Seleccion extends JFrame{
 		
 		
 		
-		btnCrepe = new JButton(new ImageIcon("src/co/edu/unbosque/view/crepe.jpg"));
-		btnCrepe.setBounds(800, 150, 300, 400);
-		this.add(btnCrepe);
-		
-		lblWaffle = new JLabel("Waffle");
-		lblWaffle.setFont(new Font("Arial Rounded MT Bold", Font.BOLD,40));
-		lblWaffle.setBounds(175, 550, 200, 50);
-		this.add(lblWaffle);
-		
-		
 		lblHelado = new JLabel("Helado");
 		lblHelado.setFont(new Font("Arial Rounded MT Bold", Font.BOLD,40));
 		lblHelado.setBounds(525, 550, 200, 50);
 		this.add(lblHelado);
 		
 		
-		lblCrepe = new JLabel("Crepe");
-		lblCrepe.setFont(new Font("Arial Rounded MT Bold", Font.BOLD,40));
-		lblCrepe.setBounds(875, 550, 200, 50);
-		this.add(lblCrepe);
 		
 		imgCarrito = new ImageIcon("src/co/edu/unbosque/view/carritoCompras.png");
 		imagen = imgCarrito.getImage();

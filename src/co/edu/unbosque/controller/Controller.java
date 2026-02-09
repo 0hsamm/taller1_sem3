@@ -19,10 +19,10 @@ public class Controller implements ActionListener{
 
 
 	public void runGUI() {
-		vf.getVenMenu().setVisible(true);
-		vf.getSel().setVisible(false);
+		vf.getVenMenu().setVisible(false);
+		vf.getSel().setVisible(true);
 		vf.getComHelado().setVisible(false);
-		vf.getVenCreacion().setVisible(true);
+		vf.getVenCreacion().setVisible(false);
 
 		asignarListeners();
 	}
